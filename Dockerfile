@@ -10,6 +10,9 @@ ENV APP_PATH /usr/src/app
 
 # Different layer for gems installation
 WORKDIR $APP_PATH
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 ADD Gemfile $APP_PATH
 ADD Gemfile.lock $APP_PATH
 RUN gem list bundler
