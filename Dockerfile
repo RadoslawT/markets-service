@@ -18,6 +18,7 @@ ADD Gemfile.lock $APP_PATH
 RUN gem list bundler
 RUN gem install bundler -v 2.0.2
 RUN gem list bundler
+RUN gem install foreman
 RUN bundle install
 # Copy the application into the container
 COPY . APP_PATH
