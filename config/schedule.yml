@@ -1,0 +1,4 @@
+update_bittrex_markets_prices:
+  cron: "*/5 * * * * *"
+  class: "Services::UpdateBittrexMarketsPrices"
+  queue: low
