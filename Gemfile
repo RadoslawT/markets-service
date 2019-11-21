@@ -27,18 +27,18 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
-gem 'sidekiq-cron', '~> 1.1'
-gem 'sidekiq', '~> 6.0.3'
 gem 'faraday', '~> 0.17.0'
+gem 'sidekiq', '~> 6.0.3'
+gem 'sidekiq-cron', '~> 1.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '=1.4.2', require: false
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
+  gem 'pry-rails'
+  gem 'rspec-rails'
 end
 
 group :development do
