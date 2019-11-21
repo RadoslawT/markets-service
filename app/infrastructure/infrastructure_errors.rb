@@ -2,4 +2,5 @@
 
 module InfrastructureErrors
   class BadResponse < StandardError; end
+  class CommandInvalid < StandardError; end
 end
