@@ -5,7 +5,18 @@ module Handlers
   class UpdateMarketPrice < Handler
     sidekiq_options queue: :default, retry: false
     def call(command:)
-      puts command.inspect
+      market = Repositories::MarketAggregate.find_by(
+        platform: command[:data][:platform],
+        name: command[:data][:market_name]
+      )
+
+      return unless market
+
+      market.update_price(command[:data][:market_price])
+
+      Repositories::MarketAggregate.adapt(market).commit
+
+      nil
     end
   end
 end
