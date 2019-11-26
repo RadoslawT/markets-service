@@ -22,16 +22,19 @@ describe Commands::UpdateMarketPrice do
 
     context 'when platform is blank' do
       let(:platform) { nil }
+
       it { is_expected.not_to be_success }
     end
 
     context 'when market_name is blank' do
       let(:market_name) { nil }
+
       it { is_expected.not_to be_success }
     end
 
     context 'when price is blank' do
       let(:market_price) { nil }
+
       it { is_expected.not_to be_success }
     end
   end

@@ -12,7 +12,7 @@ describe Adapters::BittrexApi do
         ]
       '
     end
-    let(:api_response) { double(body: api_response_body, status: api_response_status) }
+    let(:api_response) { instance_double(Faraday::Response, body: api_response_body, status: api_response_status) }
 
     before do
       allow(Faraday).to receive(:get).with('https://api.bittrex.com/v3/markets/tickers').and_return(api_response)
