@@ -3,8 +3,6 @@
 # :nodoc:
 class Repository
   class << self
-    delegate :commit, to: :uow
-
     def adapt(entity)
       if entity.new?
         uow.created << entity
@@ -13,6 +11,11 @@ class Repository
       elsif entity.dirty?
         uow.updated << entity
       end
+      self
+    end
+
+    def commit
+      uow.commit
       self
     end
 

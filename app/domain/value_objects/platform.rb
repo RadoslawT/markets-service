@@ -3,7 +3,8 @@
 module ValueObjects
   # :nodoc:
   class Platform
-    PLATFORMS = ['bittrex'].freeze
+    BITTREX = 'bittrex'
+    PLATFORMS = [BITTREX].freeze
 
     def initialize(platform)
       raise DomainErrors::IncorrectValueObject unless PLATFORMS.include?(platform)

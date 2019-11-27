@@ -11,7 +11,12 @@ module Services
 
       markets.each do |market|
         price = (market[:ask_rate] + market[:bid_rate]) / 2.0
-        Commands::UpdateMarketPrice.call(platform: 'bittrex', market_name: market[:symbol], market_price: price)
+
+        Commands::UpdateMarketPrice.call(
+          platform: ValueObjects::Platform::BITTREX,
+          market_name: market[:symbol],
+          market_price: price
+        )
       end
     end
 
