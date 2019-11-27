@@ -3,5 +3,9 @@ require: rubocop-rspec
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
 RSpec/VerifiedDoubles:
   Enabled: true
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
