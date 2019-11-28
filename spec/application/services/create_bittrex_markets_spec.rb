@@ -19,7 +19,7 @@ describe Services::CreateBittrexMarkets do
 
     it 'calls CreateMarket command' do
       call
-      expect(Commands::CreateMarket).to have_received(:call).with(platform: 'bittrex', name: symbol).exactly(api_result.size)
+      expect(Commands::CreateMarket).to have_received(:call).with(platform: ValueObjects::Platform::BITTREX, name: symbol).exactly(api_result.size)
     end
   end
 end

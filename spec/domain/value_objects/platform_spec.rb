@@ -5,7 +5,7 @@ describe ValueObjects::Platform do
     subject(:new_platform) { described_class.new(platform_name) }
 
     context 'when platform name is valid' do
-      let(:platform_name) { 'bittrex' }
+      let(:platform_name) { described_class::BITTREX }
 
       it { is_expected.to be_a_kind_of(described_class) }
       it { is_expected.to have_attributes(value: platform_name) }

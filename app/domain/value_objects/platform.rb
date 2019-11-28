@@ -3,7 +3,7 @@
 module ValueObjects
   # :nodoc:
   class Platform
-    BITTREX = 'bittrex'
+    BITTREX = :bittrex
     PLATFORMS = [BITTREX].freeze
 
     def initialize(platform)
