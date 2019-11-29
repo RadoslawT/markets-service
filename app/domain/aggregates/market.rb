@@ -3,14 +3,33 @@
 module Aggregates
   # :nodoc:
   class Market
-    attr_reader :root
+    attr_reader :root, :tasks
 
-    def initialize(root:)
+    def initialize(root:, tasks: nil)
       @root = root
+      @tasks = tasks || []
     end
 
     def update_price(price)
       @root.price = price
+      nil
+    end
+
+    def add_task(type:, completion_price:)
+      return if task_exists?(type, completion_price)
+
+      @tasks << Entities::Task.create(
+        market_uuid: root.uuid,
+        completion_price: completion_price,
+        type: type
+      )
+      nil
+    end
+
+    private
+
+    def task_exists?(type, completion_price)
+      @tasks.select { |t| t.type == type && t.completion_price == completion_price }.any?
     end
   end
 end
