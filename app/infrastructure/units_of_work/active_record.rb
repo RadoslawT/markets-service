@@ -39,6 +39,6 @@ module UnitsOfWork
     end
 
     class Market < ::ActiveRecord::Base; end
-    class MarketTask < ::ActiveRecord::Base; end
+    class Task < ::ActiveRecord::Base; end
   end
 end
