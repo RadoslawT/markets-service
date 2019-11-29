@@ -37,15 +37,15 @@ class UnitOfWork
     end
 
     def created
-      @created || @created = []
+      @created ||= []
     end
 
     def updated
-      @updated || @updated = []
+      @updated ||= []
     end
 
     def deleted
-      @deleted || @deleted = []
+      @deleted ||= []
     end
   end
 end
