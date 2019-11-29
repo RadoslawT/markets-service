@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Repositories
-  # Alert Repository interface
+  # :nodoc:
   class MarketAggregate < Repository
     @uow = UnitsOfWork::ActiveRecord
 
@@ -10,11 +10,14 @@ module Repositories
         market = Market.find_by(params)
         return unless market
 
-        Aggregates::Market.new(root: market)
+        tasks = Task.where(market_uuid: market.uuid)
+
+        Aggregates::Market.new(root: market, tasks: tasks)
       end
 
-      def adapt(aggregate)
-        Market.adapt(aggregate.root)
+      def adapt(market)
+        Market.adapt(market.root)
+        market.tasks.each { |t| Task.adapt(t) }
         self
       end
     end
