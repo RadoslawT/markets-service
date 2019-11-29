@@ -8,7 +8,7 @@ module Entities
     attr_writer :price
 
     def self.create(params)
-      task_type = ValueObject::TaskType.new(params[:type])
+      task_type = ValueObjects::TaskType.new(params[:type])
 
       new(
         uuid: SecureRandom.uuid,
