@@ -11,6 +11,10 @@ class UnitOfWork
       raise NotImplementedError
     end
 
+    def where(_params)
+      raise NotImplementedError
+    end
+
     def commit
       transaction do
         created.each { |e| create(e) }.clear

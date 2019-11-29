@@ -12,6 +12,10 @@ module UnitsOfWork
         klass(entity_class).find_by(params)&.attributes
       end
 
+      def where(entity_class, params)
+        klass(entity_class).where(params).map(&:attributes)
+      end
+
       def create(entity)
         klass(entity.class).create!(entity.attributes)
       end
@@ -39,6 +43,9 @@ module UnitsOfWork
     end
 
     class Market < ::ActiveRecord::Base; end
-    class Task < ::ActiveRecord::Base; end
+    # :nodoc:
+    class Task < ::ActiveRecord::Base
+      self.inheritance_column = nil
+    end
   end
 end

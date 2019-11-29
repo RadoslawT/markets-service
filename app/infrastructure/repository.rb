@@ -23,6 +23,13 @@ class Repository
       entity_class.from_repository(record)
     end
 
+    def where(params)
+      result = uow.where(entity_class, params)
+      return [] if result.blank?
+
+      result.map { |r| entity_class.from_repository(r) }
+    end
+
     private
 
     def uow
