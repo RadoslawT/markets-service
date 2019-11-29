@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'dry-validation', '~> 1.3.1'
 gem 'faraday', '~> 0.17.0'
+gem 'racecar', '~> 1.0.0'
 gem 'sidekiq', '~> 6.0.3'
 gem 'sidekiq-cron', '~> 1.1'
 
