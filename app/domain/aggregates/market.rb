@@ -5,9 +5,9 @@ module Aggregates
   class Market
     attr_reader :root, :tasks
 
-    def initialize(root:, tasks: nil)
+    def initialize(root:, tasks: [])
       @root = root
-      @tasks = tasks || []
+      @tasks = tasks
     end
 
     def update_price(price)
