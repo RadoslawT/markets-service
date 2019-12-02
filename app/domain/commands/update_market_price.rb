@@ -5,7 +5,7 @@ module Commands
   class UpdateMarketPrice < Command
     validator do
       params do
-        required(:platform).filled(:string)
+        required(:platform).value(type?: Symbol)
         required(:market_name).filled(:string)
         required(:market_price).filled(:float)
       end

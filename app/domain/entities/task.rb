@@ -17,5 +17,9 @@ module Entities
         completion_price: params[:completion_price]
       )
     end
+
+    def type
+      @type.to_sym
+    end
   end
 end

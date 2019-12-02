@@ -8,7 +8,7 @@ describe Entities::Task do
       completion_price: 1.0
     }
   end
-  let(:type) { 'type' }
+  let(:type) { :type }
   let(:task_type) { instance_double(ValueObjects::TaskType, value: type) }
 
   before do

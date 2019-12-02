@@ -11,7 +11,7 @@ describe Commands::CreateMarket do
       }
     end
 
-    let(:platform) { 'platform' }
+    let(:platform) { :platform }
     let(:name) { 'market_name' }
 
     context 'when params are valid' do

@@ -12,7 +12,7 @@ describe Commands::UpdateMarketPrice do
       }
     end
 
-    let(:platform) { 'platform' }
+    let(:platform) { :platform }
     let(:market_name) { 'market_name' }
     let(:market_price) { 1.23 }
 

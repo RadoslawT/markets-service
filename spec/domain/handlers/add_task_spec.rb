@@ -14,7 +14,7 @@ describe Handlers::AddTask do
       }
     end
     let(:market_uuid) { 'market_uuid' }
-    let(:type) { 'platform' }
+    let(:type) { :platform }
     let(:completion_price) { 1.23 }
 
     # let(:market_attributes) do

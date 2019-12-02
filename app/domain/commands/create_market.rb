@@ -5,7 +5,7 @@ module Commands
   class CreateMarket < Command
     validator do
       params do
-        required(:platform).filled(:string)
+        required(:platform).value(type?: Symbol)
         required(:name).filled(:string)
       end
     end

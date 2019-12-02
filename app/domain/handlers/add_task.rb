@@ -11,7 +11,7 @@ module Handlers
 
       market.add_task(
         completion_price: command[:data][:completion_price],
-        type: command[:data][:type]
+        type: command[:data][:type].to_sym
       )
 
       Repositories::MarketAggregate.adapt(market).commit

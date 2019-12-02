@@ -13,7 +13,7 @@ describe Commands::AddTask do
     end
 
     let(:market_uuid) { 'market_uuid' }
-    let(:type) { 'type' }
+    let(:type) { :type }
     let(:completion_price) { 1.23 }
 
     context 'when params are valid' do
