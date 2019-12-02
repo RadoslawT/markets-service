@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'delivery_boy', '~> 0.2.8'
 gem 'dry-validation', '~> 1.3.1'
 gem 'faraday', '~> 0.17.0'
 gem 'racecar', '~> 1.0.0'
