@@ -3,7 +3,7 @@
 module Handlers
   # :nodoc:
   class AddTask < Handler
-    sidekiq_options queue: :default, retry: true
+    sidekiq_options queue: :critical, retry: true
 
     def call(command:)
       market = Repositories::MarketAggregate.find_by(uuid: command[:data][:market_uuid])
