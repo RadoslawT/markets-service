@@ -48,6 +48,7 @@ RSpec.configure do |config|
 
   config.before do
     allow(Services::CommandBus).to receive(:call)
+    allow(Services::EventBus).to receive(:call)
   end
 
   # The settings below are suggested to provide a good initial experience
