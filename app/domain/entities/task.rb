@@ -21,5 +21,21 @@ module Entities
     def type
       @type.to_sym
     end
+
+    def type_drop?
+      type == ValueObjects::TaskType::DROP
+    end
+
+    def type_hit?
+      type == ValueObjects::TaskType::HIT
+    end
+
+    def complete
+      delete
+    end
+
+    def completed?
+      deleted?
+    end
   end
 end
