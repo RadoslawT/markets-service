@@ -9,13 +9,13 @@ module Handlers
         platform: command[:data][:platform],
         name: command[:data][:market_name]
       )
-
       return unless market
 
       market.update_price(command[:data][:market_price])
 
       Repositories::MarketAggregate.adapt(market).commit
 
+      market.emit_task_completed_events
       nil
     end
   end
