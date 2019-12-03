@@ -11,7 +11,7 @@ module Handlers
       )
       return unless market
 
-      market.update_price(command[:data][:market_price])
+      market.update_price(price: command[:data][:market_price])
 
       Repositories::MarketAggregate.adapt(market).commit
 

@@ -10,7 +10,7 @@ module Aggregates
       @tasks = tasks
     end
 
-    def update_price(price)
+    def update_price(price:)
       return if @root.price == price
 
       tasks_to_complete = if price < @root.price

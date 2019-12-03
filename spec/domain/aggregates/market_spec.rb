@@ -19,7 +19,7 @@ describe Aggregates::Market do
   end
 
   describe '#update_price' do
-    subject(:update_price) { aggregate.update_price(new_price) }
+    subject(:update_price) { aggregate.update_price(price: new_price) }
 
     let(:aggregate) { described_class.new(root: market_entity, tasks: tasks) }
     let(:new_price) { price + 1 }
