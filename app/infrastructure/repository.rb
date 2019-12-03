@@ -30,6 +30,13 @@ class Repository
       result.map { |r| entity_class.from_repository(r) }
     end
 
+    def all
+      result = uow.all(entity_class)
+      return [] if result.blank?
+
+      result.map { |r| entity_class.from_repository(r) }
+    end
+
     private
 
     def uow

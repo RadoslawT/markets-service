@@ -16,6 +16,10 @@ module UnitsOfWork
         klass(entity_class).where(params).map(&:attributes)
       end
 
+      def all(entity_class)
+        klass(entity_class).all.map(&:attributes)
+      end
+
       def create(entity)
         klass(entity.class).create!(entity.attributes)
       end
