@@ -17,15 +17,6 @@ describe Handlers::AddTask do
     let(:type) { :platform }
     let(:completion_price) { 1.23 }
 
-    # let(:market_attributes) do
-    #   {
-    #     uuid: 'uuid',
-    #     platform: platform,
-    #     name: name,
-    #     price: nil
-    #   }
-    # end
-
     let(:market) do
       instance_double(aggregate_class)
     end
