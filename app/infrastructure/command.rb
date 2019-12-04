@@ -5,22 +5,26 @@ class Command
   extend ::Validator
 
   def self.call(params = {})
-    command = new
+    params = params.compact
 
-    result = validate(params.compact)
-
-    command.request_execution(params) if result.success?
-
-    result
+    validate(params).tap do |result|
+      new(params).call if result.success?
+    end
   end
 
-  def request_execution(params)
-    Services::CommandBus.call(command_name: command_name, data: params)
+  def initialize(params)
+    @params = params
+  end
+
+  def call
+    Services::CommandBus.call(command_name: name, data: params)
   end
 
   private
 
-  def command_name
+  attr_reader :params
+
+  def name
     self.class.name
   end
 end
