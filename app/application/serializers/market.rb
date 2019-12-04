@@ -7,6 +7,6 @@ module Serializers
 
     id { @object.uuid }
 
-    attributes :uuid, :name, :platform
+    attributes :name, :platform
   end
 end
