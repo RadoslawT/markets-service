@@ -2,7 +2,7 @@
 
 module Controllers
   module V1
-    # UsersController class contains User related endpoints
+    # ApiController base class
     class ApiController < ActionController::API
       def json_api
         @json_api ||= JSONAPI::Serializable::Renderer.new
