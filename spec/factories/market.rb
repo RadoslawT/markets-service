@@ -5,6 +5,8 @@ FactoryBot.define do
     uuid     { SecureRandom.uuid }
     price    { 1.0 }
     platform { ValueObjects::Platform::BITTREX }
-    name { 'test' }
+    sequence :name do |n|
+      "test#{n}"
+    end
   end
 end
