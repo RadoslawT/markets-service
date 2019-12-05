@@ -78,7 +78,7 @@ describe Entities::Task do
   describe '#completed?' do
     subject(:complete) { task.completed? }
 
-    let(:task) { described_class.from_repository(params)  }
+    let(:task) { described_class.from_repository(params) }
 
     context 'when task is completed' do
       before { task.complete }
