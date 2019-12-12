@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## API docs
+Markets: https://app.swaggerhub.com/apis-docs/radoslawt5/alerts-app#/markets  
 
-Things you may want to cover:
+## Consumers
 
-* Ruby version
+### AlertSet
+Topic: `alerts-alert`  
+Name: `alert_set`  
+Params:
 
-* System dependencies
+| Param name       | Param type |
+| ------------- |-------------:|
+| alert_uuid       | string |
+| user_uuid        | string |
+| market_uuid      | string |
+| activation_price | float  |
+| trigger_price    | float  |
 
-* Configuration
+## Events
 
-* Database creation
+### MarketTaskCompleted
+Topic: `market-task-completed`  
+Name: `market_task_completed`  
+Params:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Param name       | Param type |
+| ------------- |-------------:|
+| market_uuid      | string |
+| completion_price | float  |
+| type             | string |
