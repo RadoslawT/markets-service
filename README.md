@@ -12,8 +12,6 @@ Params:
 
 | Param name       | Param type |
 | ------------- |-------------:|
-| alert_uuid       | string |
-| user_uuid        | string |
 | market_uuid      | string |
 | activation_price | float  |
 | trigger_price    | float  |
