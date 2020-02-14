@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Repositories::MarketAggregate do
+describe Repositories::MarketWithTasks do
   let(:market) { create(:market) }
   let(:task) { create(:task, market_uuid: market.uuid) }
 
@@ -15,7 +15,7 @@ describe Repositories::MarketAggregate do
 
     before { task }
 
-    it { is_expected.to be_an(Aggregates::Market) }
+    it { is_expected.to be_an(Aggregates::MarketWithTasks) }
 
     it 'returns correct market' do
       market_found = find_by
@@ -31,7 +31,7 @@ describe Repositories::MarketAggregate do
   describe '.adapt' do
     subject(:adapt) { described_class.adapt(market_aggregate) }
 
-    let(:market_aggregate) { Aggregates::Market.new(root: market_entity, tasks: [task_entity]) }
+    let(:market_aggregate) { Aggregates::MarketWithTasks.new(root: market_entity, tasks: [task_entity]) }
 
     before do
       allow(Repositories::Market).to receive(:adapt)

@@ -2,7 +2,7 @@
 
 module Aggregates
   # :nodoc:
-  class Market
+  class MarketWithTasks
     attr_reader :root, :tasks
 
     def initialize(root:, tasks: [])

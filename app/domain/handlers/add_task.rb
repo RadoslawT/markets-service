@@ -6,7 +6,7 @@ module Handlers
     sidekiq_options queue: :critical, retry: true
 
     def call(command:)
-      market = Repositories::MarketAggregate.find_by(uuid: command[:data][:market_uuid])
+      market = Repositories::MarketWithTasks.find_by(uuid: command[:data][:market_uuid])
       return unless market
 
       market.add_task(
@@ -14,7 +14,7 @@ module Handlers
         type: command[:data][:type].to_sym
       )
 
-      Repositories::MarketAggregate.adapt(market).commit
+      Repositories::MarketWithTasks.adapt(market).commit
       nil
     end
   end

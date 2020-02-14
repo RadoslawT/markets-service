@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Aggregates::Market do
+describe Aggregates::MarketWithTasks do
   let(:market_entity) { instance_double(Entities::Market, price: price, uuid: 'uuid') }
   let(:price) { 1.0 }
 

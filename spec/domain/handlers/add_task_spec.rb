@@ -20,8 +20,8 @@ describe Handlers::AddTask do
     let(:market) do
       instance_double(aggregate_class)
     end
-    let(:repository) { Repositories::MarketAggregate }
-    let(:aggregate_class) { Aggregates::Market }
+    let(:repository) { Repositories::MarketWithTasks }
+    let(:aggregate_class) { Aggregates::MarketWithTasks }
 
     before do
       allow(market).to receive(:add_task)
@@ -31,7 +31,7 @@ describe Handlers::AddTask do
 
     context 'when market does not exist' do
       before do
-        allow(Repositories::MarketAggregate).to receive(:find_by).with(uuid: market_uuid).and_return(nil)
+        allow(Repositories::MarketWithTasks).to receive(:find_by).with(uuid: market_uuid).and_return(nil)
       end
 
       it 'does not add a task to market' do
@@ -42,7 +42,7 @@ describe Handlers::AddTask do
 
     context 'when market exists' do
       before do
-        allow(Repositories::MarketAggregate).to receive(:find_by).with(uuid: market_uuid).and_return(market)
+        allow(Repositories::MarketWithTasks).to receive(:find_by).with(uuid: market_uuid).and_return(market)
       end
 
       it 'adds a task to market' do

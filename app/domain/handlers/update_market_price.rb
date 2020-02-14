@@ -5,7 +5,7 @@ module Handlers
   class UpdateMarketPrice < Handler
     sidekiq_options queue: :default, retry: false
     def call(command:)
-      market = Repositories::MarketAggregate.find_by(
+      market = Repositories::MarketWithTasks.find_by(
         platform: command[:data][:platform],
         name: command[:data][:market_name]
       )
@@ -13,7 +13,7 @@ module Handlers
 
       market.update_price(price: command[:data][:market_price])
 
-      Repositories::MarketAggregate.adapt(market).commit
+      Repositories::MarketWithTasks.adapt(market).commit
 
       market.emit_task_completed_events
       nil
