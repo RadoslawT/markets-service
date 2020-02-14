@@ -20,8 +20,8 @@ describe Handlers::UpdateMarketPrice do
     let(:market) do
       instance_double(aggregate_class)
     end
-    let(:repository) { Repositories::MarketWithTasks }
-    let(:aggregate_class) { Aggregates::MarketWithTasks }
+    let(:repository) { Repositories::MarketWithTasksToComplete }
+    let(:aggregate_class) { Aggregates::MarketWithTasksToComplete }
 
     before do
       allow(market).to receive(:update_price)
