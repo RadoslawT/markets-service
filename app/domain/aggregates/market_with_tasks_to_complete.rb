@@ -25,26 +25,11 @@ module Aggregates
       nil
     end
 
-    def add_task(type:, completion_price:)
-      return if task_exists?(type, completion_price)
-
-      @tasks << Entities::Task.create(
-        market_uuid: root.uuid,
-        completion_price: completion_price,
-        type: type
-      )
-      nil
-    end
-
     def emit_task_completed_events
       completed_tasks.each { |t| emit_task_completed_event(t) }
     end
 
     private
-
-    def task_exists?(type, completion_price)
-      @tasks.select { |t| t.type == type && t.completion_price == completion_price }.any?
-    end
 
     def drop_tasks(price)
       @tasks.select { |t| t.type_drop? && t.completion_price >= price }
