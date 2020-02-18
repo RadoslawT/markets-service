@@ -21,7 +21,7 @@ describe Aggregates::MarketWithTasksToComplete do
   describe '#update_price' do
     subject(:update_price) { aggregate.update_price(price: new_price) }
 
-    let(:aggregate) { described_class.new(root: market_entity, tasks: tasks) }
+    let(:aggregate) { described_class.new(root: market_entity, tasks_to_complete: tasks) }
     let(:new_price) { price + 1 }
     let(:tasks) { [] }
 
@@ -29,64 +29,12 @@ describe Aggregates::MarketWithTasksToComplete do
       update_price
       expect(market_entity).to have_received(:price=).with(new_price)
     end
-
-    context 'when price drops below the drop task completion price' do
-      let(:tasks) { [drop_task] }
-      let(:drop_task) { instance_double(Entities::Task, type: ValueObjects::TaskType::DROP, completion_price: price / 2, type_drop?: true) }
-      let(:new_price) { price / 3 }
-
-      before { allow(drop_task).to receive(:complete) }
-
-      it 'completes drop type tasks' do
-        update_price
-        expect(drop_task).to have_received(:complete)
-      end
-    end
-
-    context 'when price drops above the drop task completion price' do
-      let(:tasks) { [drop_task] }
-      let(:drop_task) { instance_double(Entities::Task, type: ValueObjects::TaskType::DROP, completion_price: price / 3, type_drop?: true) }
-      let(:new_price) { price / 2 }
-
-      before { allow(drop_task).to receive(:complete) }
-
-      it 'completes drop type tasks' do
-        update_price
-        expect(drop_task).not_to have_received(:complete)
-      end
-    end
-
-    context 'when price raises above the hit task completion price' do
-      let(:tasks) { [hit_task] }
-      let(:hit_task) { instance_double(Entities::Task, type: ValueObjects::TaskType::HIT, completion_price: price * 2, type_hit?: true) }
-      let(:new_price) { price * 3 }
-
-      before { allow(hit_task).to receive(:complete) }
-
-      it 'completes drop type tasks' do
-        update_price
-        expect(hit_task).to have_received(:complete)
-      end
-    end
-
-    context 'when price raises below the hit task completion price' do
-      let(:tasks) { [hit_task] }
-      let(:hit_task) { instance_double(Entities::Task, type: ValueObjects::TaskType::HIT, completion_price: price * 3, type_hit?: true) }
-      let(:new_price) { price * 2 }
-
-      before { allow(hit_task).to receive(:complete) }
-
-      it 'completes drop type tasks' do
-        update_price
-        expect(hit_task).not_to have_received(:complete)
-      end
-    end
   end
 
   describe '#emit_task_completed_events' do
     subject(:emit) { aggregate.emit_task_completed_events }
 
-    let(:aggregate) { described_class.new(root: market_entity, tasks: tasks) }
+    let(:aggregate) { described_class.new(root: market_entity, tasks_to_complete: tasks) }
 
     before { allow(Events::MarketTaskCompleted).to receive(:call) }
 

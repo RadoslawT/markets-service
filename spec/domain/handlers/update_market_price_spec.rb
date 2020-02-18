@@ -26,7 +26,7 @@ describe Handlers::UpdateMarketPrice do
     before do
       allow(market).to receive(:update_price)
       allow(market).to receive(:emit_task_completed_events)
-      allow(repository).to receive(:find_by).with(platform: platform, name: market_name).and_return(market)
+      allow(repository).to receive(:find_by).with(platform: platform, name: market_name, new_price: market_price).and_return(market)
       allow(repository).to receive(:adapt).and_return(repository)
       allow(repository).to receive(:commit)
     end

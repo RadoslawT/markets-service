@@ -3,23 +3,17 @@
 module Aggregates
   # :nodoc:
   class MarketWithTasksToComplete
-    attr_reader :root, :tasks
+    attr_reader :root, :tasks_to_complete
 
-    def initialize(root:, tasks: [])
+    def initialize(root:, tasks_to_complete: [])
       @root = root
-      @tasks = tasks
+      @tasks_to_complete = tasks_to_complete
     end
 
     def update_price(price:)
       return if @root.price == price
 
-      tasks_to_complete = if price < @root.price
-                            drop_tasks(price)
-                          else
-                            hit_tasks(price)
-                          end
-
-      tasks_to_complete.each(&:complete)
+      @tasks_to_complete.each(&:complete)
 
       @root.price = price
       nil
@@ -31,16 +25,8 @@ module Aggregates
 
     private
 
-    def drop_tasks(price)
-      @tasks.select { |t| t.type_drop? && t.completion_price >= price }
-    end
-
-    def hit_tasks(price)
-      @tasks.select { |t| t.type_hit? && t.completion_price <= price }
-    end
-
     def completed_tasks
-      @tasks.select(&:completed?)
+      @tasks_to_complete.select(&:completed?)
     end
 
     def emit_task_completed_event(task)

@@ -7,7 +7,8 @@ module Handlers
     def call(command:)
       market = Repositories::MarketWithTasksToComplete.find_by(
         platform: command[:data][:platform],
-        name: command[:data][:market_name]
+        name: command[:data][:market_name],
+        new_price: command[:data][:market_price]
       )
       return unless market
 
