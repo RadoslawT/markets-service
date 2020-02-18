@@ -2,7 +2,7 @@
 
 module Repositories
   # :nodoc:
-  class MarketAggregate < Repository
+  class MarketWithTasks < Repository
     @uow = UnitsOfWork::ActiveRecord
 
     class << self
@@ -12,7 +12,7 @@ module Repositories
 
         tasks = Task.where(market_uuid: market.uuid)
 
-        Aggregates::Market.new(root: market, tasks: tasks)
+        Aggregates::MarketWithTasks.new(root: market, tasks: tasks)
       end
 
       def adapt(market)

@@ -28,42 +28,6 @@ describe Entities::Task do
     end
   end
 
-  describe '#type_drop?' do
-    subject { task.type_drop? }
-
-    let(:task) { described_class.create(params) }
-
-    context 'when type drop' do
-      let(:type) { ValueObjects::TaskType::DROP }
-
-      it { is_expected.to be true }
-    end
-
-    context 'when type hit' do
-      let(:type) { ValueObjects::TaskType::HIT }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe '#type_hit?' do
-    subject { task.type_hit? }
-
-    let(:task) { described_class.create(params) }
-
-    context 'when type hit' do
-      let(:type) { ValueObjects::TaskType::HIT }
-
-      it { is_expected.to be true }
-    end
-
-    context 'when type drop' do
-      let(:type) { ValueObjects::TaskType::DROP }
-
-      it { is_expected.to be false }
-    end
-  end
-
   describe '#complete' do
     subject(:complete) { task.complete }
 

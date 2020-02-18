@@ -18,18 +18,6 @@ module Entities
       )
     end
 
-    def type
-      @type.to_sym
-    end
-
-    def type_drop?
-      type == ValueObjects::TaskType::DROP
-    end
-
-    def type_hit?
-      type == ValueObjects::TaskType::HIT
-    end
-
     def complete
       delete
     end

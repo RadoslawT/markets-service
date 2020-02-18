@@ -20,13 +20,13 @@ describe Handlers::UpdateMarketPrice do
     let(:market) do
       instance_double(aggregate_class)
     end
-    let(:repository) { Repositories::MarketAggregate }
-    let(:aggregate_class) { Aggregates::Market }
+    let(:repository) { Repositories::MarketWithTasksToComplete }
+    let(:aggregate_class) { Aggregates::MarketWithTasksToComplete }
 
     before do
       allow(market).to receive(:update_price)
       allow(market).to receive(:emit_task_completed_events)
-      allow(repository).to receive(:find_by).with(platform: platform, name: market_name).and_return(market)
+      allow(repository).to receive(:find_by).with(platform: platform, name: market_name, new_price: market_price).and_return(market)
       allow(repository).to receive(:adapt).and_return(repository)
       allow(repository).to receive(:commit)
     end
