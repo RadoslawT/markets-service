@@ -8,14 +8,14 @@ describe Handlers::AddTask do
       {
         data: {
           market_uuid: market_uuid,
-          type: type,
+          activation_price: activation_price,
           completion_price: completion_price
         }
       }
     end
     let(:market_uuid) { 'market_uuid' }
-    let(:type) { :platform }
-    let(:completion_price) { 1.23 }
+    let(:activation_price) { 1.00 }
+    let(:completion_price) { 2.00 }
 
     let(:market) do
       instance_double(aggregate_class)
@@ -47,7 +47,7 @@ describe Handlers::AddTask do
 
       it 'adds a task to market' do
         call
-        expect(market).to have_received(:add_task).with(completion_price: completion_price, type: type)
+        expect(market).to have_received(:add_task).with(activation_price: activation_price, completion_price: completion_price)
       end
 
       it 'adapts market aggregate changes into repository' do

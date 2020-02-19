@@ -10,10 +10,9 @@ module Handlers
       return unless market
 
       market.add_task(
-        completion_price: command[:data][:completion_price],
-        type: command[:data][:type].to_sym
+        activation_price: command[:data][:activation_price],
+        completion_price: command[:data][:completion_price]
       )
-
       Repositories::MarketWithTasks.adapt(market).commit
       nil
     end

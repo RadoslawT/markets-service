@@ -22,7 +22,7 @@ describe Consumers::AlertSet do
       {
         market_uuid: market_uuid,
         completion_price: trigger_price,
-        type: type
+        activation_price: activation_price
       }
     end
 

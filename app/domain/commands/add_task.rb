@@ -7,7 +7,7 @@ module Commands
       params do
         required(:market_uuid).filled(:string)
         required(:completion_price).filled(:float)
-        required(:type).value(type?: Symbol)
+        required(:activation_price).filled(:float)
       end
     end
   end

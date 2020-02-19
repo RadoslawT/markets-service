@@ -5,6 +5,7 @@ FactoryBot.define do
     uuid             { SecureRandom.uuid }
     market_uuid      { create(:market).uuid }
     type             { ValueObjects::TaskType::HIT }
-    completion_price { 1.23 }
+    activation_price { 1.00 }
+    completion_price { 2.00 }
   end
 end
