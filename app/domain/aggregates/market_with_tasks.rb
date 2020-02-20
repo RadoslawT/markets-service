@@ -11,21 +11,21 @@ module Aggregates
     end
 
     def add_task(activation_price:, completion_price:)
-      market_price_change = ValueObjects::MarketPriceChange.new(
+      task = Entities::Task.create(
         market_uuid: root.uuid,
-        from: activation_price,
-        to: completion_price
+        activation_price: activation_price,
+        completion_price: completion_price
       )
-      return if task_exists?(market_price_change)
+      return if same_task_exists?(task)
 
-      @tasks << Entities::Task.create(market_price_change: market_price_change)
+      @tasks << task
       nil
     end
 
     private
 
-    def task_exists?(market_price_change)
-      @tasks.select { |t| t.market_price_change == market_price_change }.any?
+    def same_task_exists?(task)
+      @tasks.select { |t| t.same_as?(task) }.any?
     end
   end
 end
