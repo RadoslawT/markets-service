@@ -37,5 +37,23 @@ describe Commands::AddTask do
 
       it { is_expected.not_to be_success }
     end
+
+    context 'when completion_price is equal to activation_price' do
+      let(:completion_price) { activation_price }
+
+      it { is_expected.not_to be_success }
+    end
+
+    context 'when completion_price is higher than activation_price' do
+      let(:completion_price) { activation_price + 1 }
+
+      it { is_expected.to be_success }
+    end
+
+    context 'when completion_price is lower than activation_price' do
+      let(:completion_price) { activation_price - 1 }
+
+      it { is_expected.to be_success }
+    end
   end
 end

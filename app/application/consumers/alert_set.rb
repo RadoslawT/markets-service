@@ -7,7 +7,6 @@ module Consumers
 
     def call(event)
       return if event[:name] != 'alert_set'
-      return if event[:data][:activation_price] == event[:data][:trigger_price]
 
       Commands::AddTask.call(
         market_uuid: event[:data][:market_uuid],
