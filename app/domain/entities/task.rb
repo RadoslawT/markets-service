@@ -11,17 +11,18 @@ module Entities
     attr_writer :price
 
     def self.create(params)
+      type = ValueObjects::TaskType.new(
+        activation_price: params[:activation_price],
+        completion_price: params[:completion_price]
+      ).value
+
       new(
         uuid: SecureRandom.uuid,
         market_uuid: params[:market_uuid],
         activation_price: params[:activation_price],
         completion_price: params[:completion_price],
-        type: type(params[:activation_price], params[:completion_price])
+        type: type
       )
-    end
-
-    def self.type(activation_price, completion_price)
-      activation_price > completion_price ? DROP : HIT
     end
 
     def complete
