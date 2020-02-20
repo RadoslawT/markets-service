@@ -3,18 +3,25 @@
 module Entities
   # :nodoc:
   class Task < Entity
-    params :id, :uuid, :market_uuid, :type, :completion_price, :created_at, :updated_at
+    DROP = ValueObjects::TaskType::DROP
+    HIT  = ValueObjects::TaskType::HIT
+
+    params :id, :uuid, :market_uuid, :activation_price, :completion_price, :type, :created_at, :updated_at
 
     attr_writer :price
 
     def self.create(params)
-      task_type = ValueObjects::TaskType.new(params[:type])
+      type = ValueObjects::TaskType.new(
+        activation_price: params[:activation_price],
+        completion_price: params[:completion_price]
+      ).value
 
       new(
         uuid: SecureRandom.uuid,
         market_uuid: params[:market_uuid],
-        type: task_type.value,
-        completion_price: params[:completion_price]
+        activation_price: params[:activation_price],
+        completion_price: params[:completion_price],
+        type: type
       )
     end
 
@@ -24,6 +31,10 @@ module Entities
 
     def completed?
       deleted?
+    end
+
+    def same_as?(other)
+      completion_price == other.completion_price && type == other.type && market_uuid == other.market_uuid
     end
   end
 end

@@ -4,16 +4,11 @@ describe Entities::Task do
   let(:params) do
     {
       market_uuid: 'market_uuid',
-      type: type,
-      completion_price: 1.0
+      activation_price: 1.0,
+      completion_price: 2.0
     }
   end
-  let(:type) { :type }
-  let(:task_type) { instance_double(ValueObjects::TaskType, value: type) }
-
-  before do
-    allow(ValueObjects::TaskType).to receive(:new).with(type).and_return(task_type)
-  end
+  let(:type) { ValueObjects::TaskType::HIT }
 
   describe '.create' do
     subject(:task) { described_class.create(params) }
@@ -24,6 +19,10 @@ describe Entities::Task do
 
       it 'has uuid' do
         expect(task.uuid).not_to be_nil
+      end
+
+      it 'has a correct type' do
+        expect(task.type).to eq(type)
       end
     end
   end

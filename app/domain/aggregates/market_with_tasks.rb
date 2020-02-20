@@ -10,21 +10,22 @@ module Aggregates
       @tasks = tasks
     end
 
-    def add_task(type:, completion_price:)
-      return if task_exists?(type, completion_price)
-
-      @tasks << Entities::Task.create(
+    def add_task(activation_price:, completion_price:)
+      task = Entities::Task.create(
         market_uuid: root.uuid,
-        completion_price: completion_price,
-        type: type
+        activation_price: activation_price,
+        completion_price: completion_price
       )
+      return if same_task_exists?(task)
+
+      @tasks << task
       nil
     end
 
     private
 
-    def task_exists?(type, completion_price)
-      @tasks.select { |t| t.type == type && t.completion_price == completion_price }.any?
+    def same_task_exists?(task)
+      @tasks.select { |t| t.same_as?(task) }.any?
     end
   end
 end

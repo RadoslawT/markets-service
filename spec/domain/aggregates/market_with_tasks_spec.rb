@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 describe Aggregates::MarketWithTasks do
-  let(:market_entity) { instance_double(Entities::Market, price: price, uuid: 'uuid') }
+  let(:market_entity) { instance_double(Entities::Market, price: price, uuid: market_uuid) }
+  let(:market_uuid) { double }
   let(:price) { 1.0 }
 
   before do
@@ -19,36 +20,32 @@ describe Aggregates::MarketWithTasks do
   end
 
   describe '#add_task' do
-    subject(:add_task) { aggregate.add_task(type: type, completion_price: completion_price) }
+    subject(:add_task) { aggregate.add_task(activation_price: activation_price, completion_price: completion_price) }
 
     let(:aggregate) { described_class.new(root: market_entity, tasks: tasks) }
-    let(:type) { 'type' }
-    let(:completion_price) { 2 }
-    let(:new_task) { instance_double(Entities::Task, type: type, completion_price: completion_price) }
+    let(:activation_price) { 1.0 }
+    let(:completion_price) { 2.0 }
 
-    before do
-      allow(Entities::Task).to receive(:create).with(
-        type: type,
-        completion_price: completion_price,
-        market_uuid: aggregate.root.uuid
-      ).and_return(new_task)
-    end
-
-    context 'when the same task already exists' do
-      let(:tasks) { [instance_double(Entities::Task, type: new_task.type, completion_price: new_task.completion_price)] }
+    context 'when a similar task with the same completion_price and type already exists for this market' do
+      let(:similar_task) do
+        Entities::Task.create(
+          market_uuid: market_uuid,
+          activation_price: activation_price / 2,
+          completion_price: completion_price
+        )
+      end
+      let(:tasks) { [similar_task] }
 
       it 'does not create a new task' do
-        add_task
-        expect(aggregate.tasks).not_to include(new_task)
+        expect { add_task }.not_to(change { aggregate.tasks.count })
       end
     end
 
-    context 'when the same task does not exist' do
+    context 'when a similar task does not exist' do
       let(:tasks) { [] }
 
       it 'creates a new task' do
-        add_task
-        expect(aggregate.tasks).to include(new_task)
+        expect { add_task }.to(change { aggregate.tasks.count }.from(0).to(1))
       end
     end
   end

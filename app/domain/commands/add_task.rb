@@ -6,8 +6,12 @@ module Commands
     validator do
       params do
         required(:market_uuid).filled(:string)
+        required(:activation_price).filled(:float)
         required(:completion_price).filled(:float)
-        required(:type).value(type?: Symbol)
+      end
+
+      rule(:activation_price, :completion_price) do
+        key.failure('must be diffrent than completion_price') if values[:activation_price] == values[:completion_price]
       end
     end
   end

@@ -7,14 +7,14 @@ describe Commands::AddTask do
     let(:params) do
       {
         market_uuid: market_uuid,
-        type: type,
+        activation_price: activation_price,
         completion_price: completion_price
       }
     end
 
     let(:market_uuid) { 'market_uuid' }
-    let(:type) { :type }
-    let(:completion_price) { 1.23 }
+    let(:activation_price) { 1.00 }
+    let(:completion_price) { 2.00 }
 
     context 'when params are valid' do
       it { is_expected.to be_success }
@@ -26,8 +26,8 @@ describe Commands::AddTask do
       it { is_expected.not_to be_success }
     end
 
-    context 'when type is blank' do
-      let(:type) { nil }
+    context 'when activation_price is blank' do
+      let(:activation_price) { nil }
 
       it { is_expected.not_to be_success }
     end
@@ -36,6 +36,24 @@ describe Commands::AddTask do
       let(:completion_price) { nil }
 
       it { is_expected.not_to be_success }
+    end
+
+    context 'when completion_price is equal to activation_price' do
+      let(:completion_price) { activation_price }
+
+      it { is_expected.not_to be_success }
+    end
+
+    context 'when completion_price is higher than activation_price' do
+      let(:completion_price) { activation_price + 1 }
+
+      it { is_expected.to be_success }
+    end
+
+    context 'when completion_price is lower than activation_price' do
+      let(:completion_price) { activation_price - 1 }
+
+      it { is_expected.to be_success }
     end
   end
 end

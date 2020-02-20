@@ -7,13 +7,19 @@ module ValueObjects
     HIT  = :hit
     TYPES = [DROP, HIT].freeze
 
-    def initialize(task_type)
-      raise DomainErrors::IncorrectValueObject unless TYPES.include?(task_type)
+    def initialize(activation_price:, completion_price:)
+      raise DomainErrors::IncorrectValueObject if activation_price == completion_price
 
-      @value = task_type
+      @value = type(activation_price, completion_price)
       freeze
     end
 
     attr_reader :value
+
+    private
+
+    def type(activation_price, completion_price)
+      activation_price > completion_price ? DROP : HIT
+    end
   end
 end
