@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_110910) do
+ActiveRecord::Schema.define(version: 2020_02_21_102716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,11 @@ ActiveRecord::Schema.define(version: 2020_02_19_110910) do
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }
     t.string "platform", null: false
     t.string "name", null: false
-    t.float "price"
+    t.float "avrage_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "ask_price"
+    t.float "bid_price"
     t.index ["platform", "name"], name: "index_markets_on_platform_and_name", unique: true
   end
 

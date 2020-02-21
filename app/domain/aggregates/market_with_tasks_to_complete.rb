@@ -10,12 +10,12 @@ module Aggregates
       @tasks_to_complete = tasks_to_complete
     end
 
-    def update_price(price:)
-      return if @root.price == price
+    def update_price(current_price:)
+      return if @root.price == current_price
 
       @tasks_to_complete.each(&:complete)
 
-      @root.price = price
+      @root.price = current_price
       nil
     end
 
