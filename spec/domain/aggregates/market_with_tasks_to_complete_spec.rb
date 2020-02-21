@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 describe Aggregates::MarketWithTasksToComplete do
-  let(:market_entity) { instance_double(Entities::Market, price: price, uuid: 'uuid') }
-  let(:price) { 1.0 }
+  let(:market_entity) { instance_double(Entities::Market, price: market_price, uuid: 'uuid') }
+  let(:market_price) { ValueObjects::MarketPrice.new(ask: 2, bid: 3) }
 
   before do
     allow(market_entity).to receive(:price=)
@@ -19,15 +19,15 @@ describe Aggregates::MarketWithTasksToComplete do
   end
 
   describe '#update_price' do
-    subject(:update_price) { aggregate.update_price(price: new_price) }
+    subject(:update_price) { aggregate.update_price(current_price: current_price) }
 
     let(:aggregate) { described_class.new(root: market_entity, tasks_to_complete: tasks) }
-    let(:new_price) { price + 1 }
+    let(:current_price) { ValueObjects::MarketPrice.new(ask: 1, bid: 2) }
     let(:tasks) { [] }
 
     it 'updates market price' do
       update_price
-      expect(market_entity).to have_received(:price=).with(new_price)
+      expect(market_entity).to have_received(:price=).with(current_price)
     end
   end
 

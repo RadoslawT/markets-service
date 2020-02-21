@@ -7,7 +7,8 @@ module Commands
       params do
         required(:platform).value(type?: Symbol)
         required(:market_name).filled(:string)
-        required(:market_price).filled(:float)
+        required(:ask_price).filled(:float)
+        required(:bid_price).filled(:float)
       end
     end
   end

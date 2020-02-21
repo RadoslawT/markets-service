@@ -10,12 +10,11 @@ module Services
       markets = Adapters::BittrexApi.markets_tickers
 
       markets.each do |market|
-        price = (market[:ask_rate] + market[:bid_rate]) / 2.0
-
         Commands::UpdateMarketPrice.call(
           platform: ValueObjects::Platform::BITTREX,
           market_name: market[:symbol],
-          market_price: price
+          ask_price: market[:ask_rate],
+          bid_price: market[:bid_rate]
         )
       end
     end

@@ -3,9 +3,6 @@
 module Entities
   # :nodoc:
   class Task < Entity
-    DROP = ValueObjects::TaskType::DROP
-    HIT  = ValueObjects::TaskType::HIT
-
     params :id, :uuid, :market_uuid, :activation_price, :completion_price, :type, :created_at, :updated_at
 
     attr_writer :price
