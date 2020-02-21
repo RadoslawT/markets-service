@@ -5,14 +5,14 @@ module Handlers
   class CreateMarket < Handler
     sidekiq_options queue: :default, retry: true
 
-    def call(command:)
+    def call(params)
       market = Repositories::Market.find_by(
-        platform: command[:data][:platform],
-        name: command[:data][:name]
+        platform: params[:platform],
+        name: params[:name]
       )
       return if market
 
-      market = Entities::Market.create(platform: command[:data][:platform], name: command[:data][:name])
+      market = Entities::Market.create(platform: params[:platform], name: params[:name])
 
       Repositories::Market.adapt(market).commit
 

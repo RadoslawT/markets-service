@@ -9,6 +9,6 @@ class Handler
   end
 
   def perform(params)
-    call(command: params.deep_symbolize_keys[:command])
+    call(params.deep_symbolize_keys[:command][:data])
   end
 end
