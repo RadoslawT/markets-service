@@ -7,8 +7,7 @@ module Handlers
 
     REPOSITORY = Repositories::MarketWithTasksToComplete
 
-    def call(command:)
-      params = command[:data]
+    def call(params)
       current_price = ValueObjects::MarketPrice.new(ask: params[:ask_price], bid: params[:bid_price])
 
       market = REPOSITORY.find_by(

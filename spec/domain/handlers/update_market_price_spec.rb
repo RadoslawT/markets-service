@@ -2,16 +2,14 @@
 
 describe Handlers::UpdateMarketPrice do
   describe '#call' do
-    subject(:call) { described_class.new.call(command: command) }
+    subject(:call) { described_class.new.call(params) }
 
-    let(:command) do
+    let(:params) do
       {
-        data: {
-          platform: platform,
-          market_name: market_name,
-          ask_price: ask_price,
-          bid_price: bid_price
-        }
+        platform: platform,
+        market_name: market_name,
+        ask_price: ask_price,
+        bid_price: bid_price
       }
     end
     let(:platform) { double }

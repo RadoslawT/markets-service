@@ -2,14 +2,12 @@
 
 describe Handlers::CreateMarket do
   describe '#call' do
-    subject(:call) { described_class.new.call(command: command) }
+    subject(:call) { described_class.new.call(params) }
 
-    let(:command) do
+    let(:params) do
       {
-        data: {
-          platform: platform,
-          name: name
-        }
+        platform: platform,
+        name: name
       }
     end
     let(:name) { 'name' }

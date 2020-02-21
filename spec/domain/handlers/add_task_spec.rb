@@ -2,15 +2,13 @@
 
 describe Handlers::AddTask do
   describe '#call' do
-    subject(:call) { described_class.new.call(command: command) }
+    subject(:call) { described_class.new.call(params) }
 
-    let(:command) do
+    let(:params) do
       {
-        data: {
-          market_uuid: market_uuid,
-          activation_price: activation_price,
-          completion_price: completion_price
-        }
+        market_uuid: market_uuid,
+        activation_price: activation_price,
+        completion_price: completion_price
       }
     end
     let(:market_uuid) { 'market_uuid' }
