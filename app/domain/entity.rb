@@ -2,8 +2,9 @@
 
 # :nodoc:
 class Entity
+  # Returns hash of attributes { attribue_a: value_a, attribute_b: value_b}
   def attributes
-    instance_values.symbolize_keys.slice(*self.class.allowed_params)
+    instance_values.symbolize_keys.slice(*self.class.attributes)
   end
 
   def dirty?
@@ -29,29 +30,29 @@ class Entity
   end
 
   class << self
-    attr_reader :allowed_params
-
     def create
       raise NotImplementedError
     end
 
-    def from_repository(serialized_result)
-      new(serialized_result.symbolize_keys, new_entity: false)
+    def from_repository(attributes)
+      new(attributes.symbolize_keys, new_entity: false)
     end
 
-    def params(*params)
-      params.each { |param| attr_reader param }
-      @allowed_params = params
+    def attributes(*attributes)
+      return @attributes if @attributes
+
+      @attributes = attributes
+      attributes.each { |attribute| attr_reader attribute }
     end
   end
 
   private
 
-  def initialize(params, new_entity: true)
-    params.each do |param, value|
-      raise DomainErrors::EntityParamNotAllowed, "param: #{param}" unless self.class.allowed_params.include?(param)
+  def initialize(attributes, new_entity: true)
+    attributes.each do |attribute, value|
+      raise DomainErrors::EntityAttributeNotAllowed, "attribute: #{attribute}" unless self.class.attributes.include?(attribute)
 
-      instance_variable_set(:"@#{param}", value)
+      instance_variable_set(:"@#{attribute}", value)
     end
 
     @new_entity = new_entity

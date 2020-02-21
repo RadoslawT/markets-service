@@ -3,7 +3,7 @@
 module Entities
   # :nodoc:
   class Task < Entity
-    params :id, :uuid, :market_uuid, :activation_price, :completion_price, :type, :created_at, :updated_at
+    attributes :id, :uuid, :market_uuid, :activation_price, :completion_price, :type, :created_at, :updated_at
 
     attr_writer :price
 
