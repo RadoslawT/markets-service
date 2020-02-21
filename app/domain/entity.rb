@@ -2,6 +2,28 @@
 
 # :nodoc:
 class Entity
+  # Class methods
+  class << self
+    private_class_method :new
+
+    def create
+      raise NotImplementedError
+    end
+
+    def from_repository(attributes)
+      new(attributes.symbolize_keys, new_entity: false)
+    end
+
+    def attributes(*attributes)
+      return @attributes if @attributes
+
+      @attributes = attributes
+      attributes.each { |attribute| attr_reader attribute }
+    end
+  end
+
+  # Instance methods
+
   # Returns hash of attributes { attribue_a: value_a, attribute_b: value_b}
   def attributes
     instance_values.symbolize_keys.slice(*self.class.attributes)
@@ -29,23 +51,6 @@ class Entity
     attributes == other.attributes && self.class.name == other.class.name
   end
 
-  class << self
-    def create
-      raise NotImplementedError
-    end
-
-    def from_repository(attributes)
-      new(attributes.symbolize_keys, new_entity: false)
-    end
-
-    def attributes(*attributes)
-      return @attributes if @attributes
-
-      @attributes = attributes
-      attributes.each { |attribute| attr_reader attribute }
-    end
-  end
-
   private
 
   def initialize(attributes, new_entity: true)
@@ -61,6 +66,4 @@ class Entity
   end
 
   attr_reader :initialize_attributes, :deleted, :new_entity
-
-  private_class_method :new
 end
