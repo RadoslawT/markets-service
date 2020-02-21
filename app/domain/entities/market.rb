@@ -3,7 +3,7 @@
 module Entities
   # :nodoc:
   class Market < Entity
-    params :id, :uuid, :platform, :name, :ask_price, :bid_price, :avrage_price, :created_at, :updated_at
+    attributes :id, :uuid, :platform, :name, :ask_price, :bid_price, :avrage_price, :created_at, :updated_at
 
     def self.create(params)
       price = ValueObjects::MarketPrice.new(ask: params[:ask_price], bid: params[:bid_price])

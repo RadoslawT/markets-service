@@ -2,8 +2,31 @@
 
 # :nodoc:
 class Entity
+  # Class methods
+  class << self
+    private_class_method :new
+
+    def create
+      raise NotImplementedError
+    end
+
+    def from_repository(attributes)
+      new(attributes.symbolize_keys, new_entity: false)
+    end
+
+    def attributes(*attributes)
+      return @attributes if @attributes
+
+      @attributes = attributes
+      attributes.each { |attribute| attr_reader attribute }
+    end
+  end
+
+  # Instance methods
+
+  # Returns hash of attributes { attribue_a: value_a, attribute_b: value_b}
   def attributes
-    instance_values.symbolize_keys.slice(*self.class.allowed_params)
+    instance_values.symbolize_keys.slice(*self.class.attributes)
   end
 
   def dirty?
@@ -28,30 +51,13 @@ class Entity
     attributes == other.attributes && self.class.name == other.class.name
   end
 
-  class << self
-    attr_reader :allowed_params
-
-    def create
-      raise NotImplementedError
-    end
-
-    def from_repository(serialized_result)
-      new(serialized_result.symbolize_keys, new_entity: false)
-    end
-
-    def params(*params)
-      params.each { |param| attr_reader param }
-      @allowed_params = params
-    end
-  end
-
   private
 
-  def initialize(params, new_entity: true)
-    params.each do |param, value|
-      raise DomainErrors::EntityParamNotAllowed, "param: #{param}" unless self.class.allowed_params.include?(param)
+  def initialize(attributes, new_entity: true)
+    attributes.each do |attribute, value|
+      raise DomainErrors::EntityAttributeNotAllowed, "attribute: #{attribute}" unless self.class.attributes.include?(attribute)
 
-      instance_variable_set(:"@#{param}", value)
+      instance_variable_set(:"@#{attribute}", value)
     end
 
     @new_entity = new_entity
@@ -60,6 +66,4 @@ class Entity
   end
 
   attr_reader :initialize_attributes, :deleted, :new_entity
-
-  private_class_method :new
 end
