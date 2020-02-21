@@ -5,7 +5,8 @@ describe Entities::Market do
     {
       platform: platform_name,
       name: 'market_name',
-      price: 1.0
+      ask_price: 1,
+      bid_price: 2
     }
   end
   let(:platform_name) { 'platform_name' }

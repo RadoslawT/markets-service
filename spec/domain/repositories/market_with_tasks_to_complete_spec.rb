@@ -8,18 +8,19 @@ describe Repositories::MarketWithTasksToComplete do
   let(:task_entity) { Entities::Task.from_repository(task.attributes) }
 
   describe '.find_by' do
-    subject(:find_by) { described_class.find_by(new_price: new_price, name: market.name) }
+    subject(:find_by) { described_class.find_by(current_price: current_price, name: market.name) }
 
     let(:market_uuid) { 'd52fbfee-7fb6-446a-bbc0-8d3ba476208f' }
-    let(:new_price) { double }
+    let(:current_price) { ValueObjects::MarketPrice.new(ask: 1, bid: 2) }
     let(:tasks_to_complete) { double }
 
     before do
       task
+      allow(Repositories::Market).to receive(:find_by).with(name: market.name).and_return(market_entity)
       allow(Repositories::Task).to receive(:tasks_to_complete).with(
-        market_uuid: market.uuid,
-        market_price: market.price,
-        new_price: new_price
+        market_uuid: market_entity.uuid,
+        past_price: market_entity.price,
+        current_price: current_price
       ).and_return(tasks_to_complete)
     end
 
