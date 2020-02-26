@@ -7,6 +7,8 @@ module Commands
       params do
         required(:platform).value(type?: Symbol)
         required(:name).filled(:string)
+        required(:ask_price).filled(:float)
+        required(:bid_price).filled(:float)
       end
     end
   end
