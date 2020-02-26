@@ -7,18 +7,23 @@ describe Handlers::CreateMarket do
     let(:params) do
       {
         platform: platform,
-        name: name
+        name: name,
+        ask_price: ask_price,
+        bid_price: bid_price
       }
     end
     let(:name) { 'name' }
-    let(:platform) { 'platform' }
+    let(:platform) { :platform }
+    let(:ask_price) { 1.23 }
+    let(:bid_price) { 1.23 }
 
     let(:market_attributes) do
       {
         uuid: 'uuid',
         platform: platform,
         name: name,
-        price: nil
+        ask_price: ask_price,
+        bid_price: bid_price
       }
     end
 
@@ -41,7 +46,7 @@ describe Handlers::CreateMarket do
 
       it 'creates an Entity' do
         call
-        expect(entity_class).to have_received(:create).with(platform: platform, name: name)
+        expect(entity_class).to have_received(:create).with(params)
       end
 
       it 'adapts market changes into repository' do
