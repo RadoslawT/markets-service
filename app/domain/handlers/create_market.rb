@@ -3,7 +3,7 @@
 module Handlers
   # :nodoc:
   class CreateMarket < Handler
-    sidekiq_options queue: :default, retry: true
+    sidekiq_options queue: :critical, retry: true
 
     def call(params)
       market = Repositories::Market.find_by(
@@ -12,8 +12,12 @@ module Handlers
       )
       return if market
 
-      market = Entities::Market.create(platform: params[:platform], name: params[:name])
-
+      market = Entities::Market.create(
+        platform: params[:platform].to_sym,
+        name: params[:name],
+        ask_price: params[:ask_price],
+        bid_price: params[:bid_price]
+      )
       Repositories::Market.adapt(market).commit
 
       nil
