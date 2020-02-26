@@ -4,7 +4,7 @@ module ValueObjects
   # :nodoc:
   class MarketPrice
     def initialize(ask:, bid:)
-      raise DomainErrors::IncorrectValueObject if ask <= 0 || bid <= 0
+      raise DomainErrors::IncorrectValueObject if ask.negative? || bid.negative?
 
       @ask = ask
       @bid = bid
