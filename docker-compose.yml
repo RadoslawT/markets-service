@@ -1,0 +1,30 @@
+version: "3"
+services:
+  markets-service-db:
+    image: postgres
+    networks:
+      - alerts-network
+  markets-service-redis:
+    ports:
+     - "6379:6379"
+    image: "redis:alpine"
+    networks:
+      - alerts-network
+  markets-service:
+    build:
+      context: .
+    command: foreman start
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3001:3001"
+    depends_on:
+      - markets-service-db
+      - markets-service-redis
+    working_dir: /usr/src/app/
+    networks:
+      - alerts-network
+
+networks:
+  alerts-network:
+    external: true
