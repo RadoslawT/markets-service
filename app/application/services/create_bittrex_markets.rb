@@ -3,9 +3,6 @@
 module Services
   # :nodoc:
   class CreateBittrexMarkets
-    include Sidekiq::Worker
-    sidekiq_options queue: :critical, retry: true
-
     def self.call
       markets = Adapters::BittrexApi.markets_tickers
 
@@ -19,10 +16,6 @@ module Services
       end
 
       nil
-    end
-
-    def perform
-      self.class.call
     end
   end
 end
